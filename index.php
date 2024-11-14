@@ -4,17 +4,18 @@ require './vendor/autoload.php';
 
 use Intervention\Image\ImageManager;
 
-$manager = ImageManager::imagick();
-
 $input_path = readline("What Image you want to grayscale?");
 
 if (file_exists($input_path)) {
-    mkdir(dirname($outputPath), 0777, true);
+   grayscaleImage($input_path);
+}
+else {
+    echo "The image doesn't exists";
 }
 
-function grayscaleImage($image) {
-    $image = $manager->read($image);
+function grayscaleImage(string $image_url): void {
+    $manager = ImageManager::imagick();
+    $image = $manager->read($image_url);
     $image = $image->greyscale();
-    var_dump($image);
-    #$image->save('images/brotarbw.png');
+    $image->save('bw'.$image_url);
 }
